@@ -1,23 +1,53 @@
-import classes from './MeetupItem.module.css';
-import Card from '../../components/ui/Card';
-import Link from 'next/link';
+import MeetupDetailPage from "../../components/meetups/MeetupDetailPage";
 
-const MeetupDetailPage = () => {
+const MeetupDetail = (props) => {
 
-    return (
-      <Card>
-        <div className={classes.image}>
-          <img src={props.image} alt={props.title} />
-        </div>
-        <div className={classes.content}>
-          <h3>{props.title}</h3>
-          <address>{props.address}</address>
-        </div>
-        <div className={classes.actions}>
-         <Link href='/'>Back</Link>
-        </div>
-      </Card>
- 
-  );
-}
-export default MeetupDetailPage;
+  return (
+    <MeetupDetailPage 
+    image={props.meetupData.image}
+    title={props.meetupData.title}
+    address={props.meetupData.address}
+    description={props.meetupData.description}
+    />
+  )
+};
+
+
+export async function getStaticPaths() {
+  return {
+    fallback: false,
+    paths: [
+      {
+        params: {
+          meetupId: "m1",
+        }
+      },
+      {
+        params: {
+          meetupId: "m2",
+        }
+      }
+    ]
+  }
+};
+
+export async function getStaticProps(context) {
+  // fetch the data or get data whatever you want
+
+  const meetupId = context.params.meetupId;
+
+  return {
+    props: {
+      meetupData: {
+        id: {meetupId},
+        title: "First Meetup",
+        image: "https://upload.wikimedia.org/wikipedia/en/0/0c/Barro6w_Central_Station%2C_1941.jpg?2016011506032",
+        address: "Meetup Street 5, 12345 Meetup City",
+        description: "First Meetup Description",
+      }
+    }
+  };
+};
+
+
+export default MeetupDetail;
