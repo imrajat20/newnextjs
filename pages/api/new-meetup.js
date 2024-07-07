@@ -14,17 +14,6 @@ const handler = async (req, res) => {
         client.close();
         res.status(201).json({message: 'Meetup inserted!'});
     }
-    if(req.method === 'GET'){
-    
-        const client = await MongoClient.connect('mongodb+srv://imrajat:@Amit1432@project1.s2veazo.mongodb.net/meetups?retryWrites=true&w=majority&appName=project1');
-        const db = client.db();
-        const meetupsCollection = db.collection('meetups');
-        const result = await meetupsCollection.find();
-        console.log(result);
-        client.close();
-        res.status(201).json({message: 'Got Data!'});
-    }
-
 
 };
 
